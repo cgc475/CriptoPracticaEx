@@ -1,5 +1,6 @@
 package com.example.CriptoPracticaEx.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.CriptoPracticaEx.entity.EstudianteWeb;
 import com.example.CriptoPracticaEx.Repository.EstudianteWebRepository;
@@ -12,6 +13,7 @@ public class EstudianteWebService { // Ya no implementa nada
 
     @Autowired
     private EstudianteWebRepository repo;
+
 
     // Se quitó @Override
     public List<EstudianteWeb> listar() {
