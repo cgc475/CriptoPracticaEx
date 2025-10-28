@@ -107,12 +107,34 @@ public class EstudianteWebController {
     }
 
     @PutMapping("/actualizar")
-    public EstudianteWeb actualizar(@RequestBody EstudianteWeb e) {
-        return service.actualizar(e);
+    public RespuestaDTO actualizar(@RequestBody EstudianteDTO dto) {
+        // Buscar estudiante actual por ID
+        EstudianteWeb existente = service.buscarPorId(dto.getCodiEst());
+        if (existente == null) {
+            return new RespuestaDTO("error", "No se encontró el estudiante con ID: " + dto.getCodiEst(), null);
+        }
+
+        // Actualizar solo los datos permitidos
+        existente.setNdniEstdWeb(dto.getDniEst());
+        existente.setAppaEstdWeb(dto.getApaEst());
+        existente.setApmaEstdWeb(dto.getAmaEst());
+        existente.setNombEstdWeb(dto.getNombEst());
+        existente.setFechNaciEstdWeb(dto.getFechaNaciEst());
+
+        // Guardar los cambios
+        service.actualizar(existente);
+
+        return new RespuestaDTO("ok", "Datos del estudiante actualizados correctamente", null);
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public void eliminar(@PathVariable Integer id) {
+
+
+    @DeleteMapping("/eliminar")
+    public RespuestaDTO eliminar(@RequestBody EstudianteDTO dto) {
+        int id = dto.getCodiEst();
         service.eliminar(id);
+        return new RespuestaDTO("ok", "usuario eliminado", null);
     }
+
+
 }
